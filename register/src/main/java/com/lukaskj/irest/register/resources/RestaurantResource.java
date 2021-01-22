@@ -1,4 +1,4 @@
-package com.lukaskj.irest.register;
+package com.lukaskj.irest.register.resources;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,14 +16,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import com.lukaskj.irest.register.entity.Restaurant;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/restaurants")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Tag(name = "restaurant")
 public class RestaurantResource {
 
    @GET
-   @Produces(MediaType.APPLICATION_JSON)
    public List<Restaurant> all() {
       return Restaurant.listAll();
    }
