@@ -19,7 +19,7 @@ public class RegisterTestLifecycleManager implements QuarkusTestResourceLifecycl
       System.out.println(POSTGRES.getJdbcUrl());
       System.out.println(POSTGRES.getJdbcUrl());
       System.out.println(POSTGRES.getJdbcUrl());
-      var props = new HashMap<String, String>();
+      HashMap<String, String> props = new HashMap<String, String>();
 
       props.put("quarkus.datasource.db-kind", "postgres");
       props.put("quarkus.datasource.jdbc.url", POSTGRES.getDatabaseName());

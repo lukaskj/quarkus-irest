@@ -1,7 +1,8 @@
 package com.lukaskj.irest.register.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +14,6 @@ public class Restaurant extends BaseEntity {
 
    public String name;
 
-   @ManyToOne
+   @OneToOne(cascade = CascadeType.ALL)
    public Location location;
 }
