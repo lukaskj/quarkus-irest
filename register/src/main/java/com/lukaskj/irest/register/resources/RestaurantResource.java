@@ -20,10 +20,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import com.lukaskj.irest.register.dto.AddRestaurantDTO;
-import com.lukaskj.irest.register.dto.RestaurantDTO;
-import com.lukaskj.irest.register.dto.RestaurantMapper;
-import com.lukaskj.irest.register.dto.UpdateRestaurantDTO;
+import com.lukaskj.irest.register.dto.restaurant.AddRestaurantDTO;
+import com.lukaskj.irest.register.dto.restaurant.RestaurantDTO;
+import com.lukaskj.irest.register.dto.restaurant.RestaurantMapper;
+import com.lukaskj.irest.register.dto.restaurant.UpdateRestaurantDTO;
 import com.lukaskj.irest.register.entity.Restaurant;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
