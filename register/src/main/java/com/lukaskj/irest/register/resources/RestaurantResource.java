@@ -53,7 +53,7 @@ public class RestaurantResource {
    @PUT
    @Path("{id}")
    @Transactional
-   public void update(@PathParam("id") Long id, UpdateRestaurantDTO dto) {
+   public void update(@PathParam("id") Long id, @Valid UpdateRestaurantDTO dto) {
       Optional<Restaurant> restOpt = Restaurant.findByIdOptional(id);
       if (restOpt.isEmpty()) {
          throw new NotFoundException();

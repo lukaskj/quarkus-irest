@@ -18,7 +18,6 @@ import javax.ws.rs.core.Response.Status;
 import com.lukaskj.irest.register.entity.Meal;
 import com.lukaskj.irest.register.entity.Restaurant;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
 @Path("restaurants/{restaurantId}/meals")
 @Produces(MediaType.APPLICATION_JSON)
