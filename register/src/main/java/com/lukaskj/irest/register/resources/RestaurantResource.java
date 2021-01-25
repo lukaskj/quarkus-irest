@@ -25,6 +25,10 @@ import com.lukaskj.irest.register.dto.restaurant.RestaurantDTO;
 import com.lukaskj.irest.register.dto.restaurant.RestaurantMapper;
 import com.lukaskj.irest.register.dto.restaurant.UpdateRestaurantDTO;
 import com.lukaskj.irest.register.entity.Restaurant;
+import com.lukaskj.irest.register.util.ConstraintViolationRespose;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/restaurants")
@@ -44,6 +48,8 @@ public class RestaurantResource {
 
    @POST
    @Transactional
+   @APIResponse(responseCode = "201", description = "Success")
+   @APIResponse(responseCode = "400", content = @Content(schema = @Schema(allOf = ConstraintViolationRespose.class)))
    public Response add(@Valid AddRestaurantDTO dto) {
       Restaurant rest = restaurantMapper.toRestaurant(dto);
       rest.persist();
