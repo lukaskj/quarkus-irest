@@ -3,6 +3,7 @@
 ### Technologies:
 - Quarkus
 - Panache
+- Keycloak
 - RESTEasy
 - OpenAPI
 - Postgres
