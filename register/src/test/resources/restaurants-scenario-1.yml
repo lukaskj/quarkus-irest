@@ -1,7 +1,7 @@
 restaurant:
-  - ID: 123
-    NAME: "New restaurant"
-    OWNER_ID: "Keycloak ID"
-  - ID: 666
-    NAME: "New restaurant 2"
-    OWNER_ID: "Keycloak ID 2"
+  - id: 123
+    name: "New restaurant"
+    ownerId: "Keycloak ID"
+  - id: 666
+    name: "New restaurant 2"
+    ownerId: "Keycloak ID 2"

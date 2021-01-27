@@ -15,14 +15,10 @@ public class RegisterTestLifecycleManager implements QuarkusTestResourceLifecycl
          POSTGRES = new PostgreSQLContainer<>("postgres:13-alpine");
       }
       POSTGRES.start();
-      System.out.println(POSTGRES.getJdbcUrl());
-      System.out.println(POSTGRES.getJdbcUrl());
-      System.out.println(POSTGRES.getJdbcUrl());
-      System.out.println(POSTGRES.getJdbcUrl());
       HashMap<String, String> props = new HashMap<String, String>();
 
       props.put("quarkus.datasource.db-kind", "postgres");
-      props.put("quarkus.datasource.jdbc.url", POSTGRES.getDatabaseName());
+      // props.put("quarkus.datasource.jdbc.url", POSTGRES.getDatabaseName());
       props.put("quarkus.datasource.jdbc.url", POSTGRES.getJdbcUrl());
       props.put("quarkus.datasource.username", POSTGRES.getUsername());
       props.put("quarkus.datasource.password", POSTGRES.getPassword());

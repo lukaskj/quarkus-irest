@@ -19,7 +19,7 @@ import com.github.database.rider.core.api.dataset.DataSet;
 import com.lukaskj.irest.register.entity.Restaurant;
 
 @DBRider
-@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE)
+@DBUnit(caseSensitiveTableNames = true,  caseInsensitiveStrategy = Orthography.LOWERCASE)
 @QuarkusTest
 @QuarkusTestResource(RegisterTestLifecycleManager.class)
 public class RestaurantResourceTest {
@@ -27,7 +27,6 @@ public class RestaurantResourceTest {
    @Test
    @DataSet("restaurants-scenario-1.yml")
    public void testGetAllRestaurants() {
-      // NoClassDefFoundError: org/junit/rules/TestRule
       String result =
             given().when().get("/restaurants").then().statusCode(200).extract().asString();
       Approvals.verifyJson(result);
