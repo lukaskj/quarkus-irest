@@ -1,0 +1,11 @@
+{
+   "iss": "http://localhost:8180/auth/realms/irest",
+   "jti": "a-f2b2180c",
+   "sub": "24400320",
+   "upn": "jdoe@example.com",
+   "exp": 1311281970,
+   "iat": 1311280970,
+   "groups": [
+      "owners"
+   ]
+}
