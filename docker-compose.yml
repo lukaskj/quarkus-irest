@@ -30,3 +30,11 @@ services:
       - "14268:14268"
       - "14250:14250"
       - "9411:9411"
+  prometheus_irest:
+    container_name: irest_prometheus
+    image: prom/prometheus:v2.24.1
+    # network_mode: "host"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
