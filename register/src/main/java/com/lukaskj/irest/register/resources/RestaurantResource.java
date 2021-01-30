@@ -1,6 +1,5 @@
 package com.lukaskj.irest.register.resources;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,7 +8,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,7 +17,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.RedirectionException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -29,6 +26,9 @@ import com.lukaskj.irest.register.dto.restaurant.RestaurantMapper;
 import com.lukaskj.irest.register.dto.restaurant.UpdateRestaurantDTO;
 import com.lukaskj.irest.register.entity.Restaurant;
 import com.lukaskj.irest.register.util.ConstraintViolationRespose;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -55,6 +55,10 @@ public class RestaurantResource {
    RestaurantMapper restaurantMapper;
 
    @GET
+   @Counted(name = "Restaurant count search")
+   @SimplyTimed(name = "Restaurant simple search time")
+   @Timed(name = "Restaurant complete search time")
+   // @Gauge()
    public List<RestaurantDTO> all() {
       Stream<Restaurant> allRestaurants = Restaurant.streamAll();
       return allRestaurants.map(r -> restaurantMapper.toRestaurantDTO(r))
