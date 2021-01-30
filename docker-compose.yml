@@ -33,8 +33,14 @@ services:
   prometheus_irest:
     container_name: irest_prometheus
     image: prom/prometheus:v2.24.1
-    # network_mode: "host"
+    network_mode: "bridge"
     ports:
       - "9090:9090"
     volumes:
       - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana_irest:
+    container_name: irest_grafana
+    image: grafana/grafana:7.3.7-ubuntu
+    network_mode: "bridge"
+    ports:
+      - "3000:3000"
