@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   postgres_register:
-    container_name: postgres_register_irest
+    container_name: irest_register_postgres
     image: postgres:13.1-alpine
     environment:
       POSTGRES_USER: register
@@ -9,10 +9,24 @@ services:
     ports:
       - "5432:5432"
   keycloak_irest:
-    container_name: keycloak_irest
+    container_name: irest_keycloak
     image: jboss/keycloak:12.0.2
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
     ports:
       - "8180:8080"
+  jaeger_irest:
+    container_name: irest_jaeger
+    image: jaegertracing/all-in-one:1.21
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: 9411
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
