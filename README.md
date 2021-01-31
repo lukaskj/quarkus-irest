@@ -6,6 +6,7 @@
 - Keycloak
 - RESTEasy
 - OpenAPI
+- Mutiny
 - Postgres
 - TestContainers
 - Database Rider
