@@ -3,7 +3,8 @@ $ mvn io.quarkus:quarkus-maven-plugin:1.11.0.Final:create "-DprojectGroupId=com.
 
 $ ./mvnw clean package -DskipTests
 
-$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgres,hibernate-orm-panache,resteasy-jsonb,smallrye-openapi,hibernate-validator,quarkus-smallrye-jwt,quarkus-smallrye-opentracing,quarkus-smallrye-metrics"
+# Register
+$ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgres,hibernate-orm-panache,resteasy-jsonb,smallrye-openapi,hibernate-validator,quarkus-smallrye-jwt,quarkus-smallrye-opentracing,quarkus-smallrye-metrics,smallrye-reactive-messaging-amqp"
 
 $ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgres,hibernate-validator"
 

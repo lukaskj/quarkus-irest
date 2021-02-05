@@ -52,3 +52,13 @@ services:
     # network_mode: "bridge"
     ports:
       - "3000:3000"
+  artemis_irest:
+    container_name: irest_artemis
+    image: vromero/activemq-artemis:2.11.0-alpine
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "5672:5672"
+    environment:
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
