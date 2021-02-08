@@ -19,6 +19,19 @@ public class Meal extends BaseEntity {
 
    public BigDecimal price;
 
+   public static Uni<MealDTO> findById(PgPool pgPool, Long id) {
+      Uni<RowSet<Row>> queryResult =
+            pgPool.preparedQuery("select * from meal where id = $q").execute(Tuple.of(id));
+      return queryResult.map(RowSet::iterator)
+            .map(iterator -> iterator.hasNext() ? MealDTO.from(iterator.next()) : null);
+      // return queryResult.onItem().transformToMulti(rowSet -> Multi.createFrom().items(() -> {
+      // return StreamSupport.stream(rowSet.spliterator(), false);
+      // })).onItem().transform(MealDTO::from);
+
+
+      // return uniToMulti(queryResult);
+   }
+
    public static Multi<MealDTO> findAll(PgPool pgPool) {
       Uni<RowSet<Row>> queryResult = pgPool.query("select * from meal").execute();
       return uniToMulti(queryResult);
