@@ -78,3 +78,33 @@ services:
       MONGO_INITDB_ROOT_USERNAME: order
       MONGO_INITDB_ROOT_PASSWORD: order
       MONGO_INITDB_DATABASE: order
+
+
+
+  zookeeper_irest:
+    container_name: irest_zookeeper
+    image: debezium/zookeeper:1.1
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+  
+  kafka_irest:
+    container_name: irest_kafka
+    image: debezium/kafka:1.1
+    ports:
+      - 9092:9092
+    links:
+      - zookeeper_irest
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper_irest:2181
+  
+  kafdrop_irest:
+    container_name: irest_kafdrop
+    image: obsidiandynamics/kafdrop:3.24.0
+    ports:
+      - 9000:9000
+    environment:
+      - KAFKA_BROKERCONNECT=kafka_irest:9092
+    depends_on:
+      - kafka_irest
