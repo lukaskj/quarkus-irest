@@ -18,14 +18,14 @@ public class MealCart extends BaseEntity {
    private static MealCart toMealCart(Row row) {
       MealCart mc = new MealCart();
       mc.client = row.getString("client");
-      mc.mealId = row.getLong("mealId");
+      mc.mealId = row.getLong("meal_id");
       return mc;
    }
 
 
    public static Uni<List<MealCart>> findCart(PgPool pgPool, String client) {
       Uni<RowSet<Row>> queryResult = pgPool
-            .preparedQuery("select * from meal_client where client = $q").execute(Tuple.of(client));
+            .preparedQuery("select * from meal_client where client = $1").execute(Tuple.of(client));
       return queryResult.map(rowSet -> {
          List<MealCart> list = new ArrayList<>(rowSet.size());
          for (Row r : rowSet) {
@@ -42,7 +42,9 @@ public class MealCart extends BaseEntity {
    }
 
    public static Uni<Long> save(PgPool pgClient, String client, Long meal) {
-      return pgClient.preparedQuery("INSERT INTO meal_client (client, meal_id) values ($1, $2)")
+      return pgClient
+            .preparedQuery(
+                  "INSERT INTO meal_client (client, meal_id) values ($1, $2) returning meal_id")
             .execute(Tuple.of(client, meal))
             .map(rowSet -> rowSet.iterator().next().getLong("meal_id"));
    }

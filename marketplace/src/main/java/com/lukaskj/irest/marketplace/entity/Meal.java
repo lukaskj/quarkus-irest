@@ -21,7 +21,7 @@ public class Meal extends BaseEntity {
 
    public static Uni<MealDTO> findById(PgPool pgPool, Long id) {
       Uni<RowSet<Row>> queryResult =
-            pgPool.preparedQuery("select * from meal where id = $q").execute(Tuple.of(id));
+            pgPool.preparedQuery("select * from meal where id = $1").execute(Tuple.of(id));
       return queryResult.map(RowSet::iterator)
             .map(iterator -> iterator.hasNext() ? MealDTO.from(iterator.next()) : null);
       // return queryResult.onItem().transformToMulti(rowSet -> Multi.createFrom().items(() -> {

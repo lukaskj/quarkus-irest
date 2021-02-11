@@ -17,6 +17,8 @@ import com.lukaskj.irest.marketplace.entity.dto.MealDTO;
 import com.lukaskj.irest.marketplace.entity.dto.MealOrderDTO;
 import com.lukaskj.irest.marketplace.entity.dto.OrderDTO;
 import com.lukaskj.irest.marketplace.entity.dto.RestaurantDTO;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.pgclient.PgPool;
 
@@ -28,6 +30,10 @@ public class CartResource {
 
    @Inject
    PgPool pgClient;
+
+   @Inject
+   @Channel("orders")
+   Emitter<OrderDTO> orderEmitter;
 
    @GET
    public Uni<List<MealCart>> getCart() {
@@ -55,12 +61,15 @@ public class CartResource {
       RestaurantDTO restaurant = new RestaurantDTO();
       restaurant.name = "Nome do restaurant";
       order.restaurant = restaurant;
+      order.meals = meals;
+
+      orderEmitter.send(order);
 
       return MealCart.delete(pgClient, client);
    }
 
    private MealOrderDTO from(MealCart mealCart) {
-      MealDTO md = Meal.findById(pgClient, mealCart.id).await().indefinitely();
+      MealDTO md = Meal.findById(pgClient, mealCart.mealId).await().indefinitely();
       return new MealOrderDTO(md.name, md.description, md.price);
    }
 }

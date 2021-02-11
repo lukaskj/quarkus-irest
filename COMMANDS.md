@@ -9,7 +9,7 @@ $ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgres,hibernate-orm-panache
 $ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgres,hibernate-validator"
 
 # Marketplace
-$ ./mvnw quarkus:add-extension -Dextensions="resteasy-mutiny,jdbc-postgres, flyway, pg-client, smallrye-reactive-messaging-amqp"
+$ ./mvnw quarkus:add-extension -Dextensions="resteasy-mutiny,jdbc-postgres, flyway, pg-client, smallrye-reactive-messaging-amqp, smallrye-reactive-messaging-kafka"
 
 # Order
 ./mvnw quarkus:add-extension -Dextensions="smallrye-openapi,resteasy-jsonb,mongodb-panache"
