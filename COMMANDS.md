@@ -12,7 +12,7 @@ $ ./mvnw quarkus:add-extension -Dextensions="jdbc-postgres,hibernate-validator"
 $ ./mvnw quarkus:add-extension -Dextensions="resteasy-mutiny,jdbc-postgres, flyway, pg-client, smallrye-reactive-messaging-amqp, smallrye-reactive-messaging-kafka"
 
 # Order
-./mvnw quarkus:add-extension -Dextensions="smallrye-openapi,resteasy-jsonb,mongodb-panache,smallrye-reactive-messaging-kafka"
+./mvnw quarkus:add-extension -Dextensions="smallrye-openapi,resteasy-jsonb,mongodb-panache,smallrye-reactive-messaging-kafka,quarkus-smallrye-health"
 
 $ docker run --ulimit memlock=-1:-1 -it --rm --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=quarkus_test -e POSTGRES_PASSWORD=quarkus_test -e POSTGRES_DB=quarkus_test -p 5432:5432 postgres:13-alpine
 
