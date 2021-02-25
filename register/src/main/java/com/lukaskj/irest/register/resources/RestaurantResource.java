@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -28,6 +29,9 @@ import com.lukaskj.irest.register.dto.restaurant.RestaurantMapper;
 import com.lukaskj.irest.register.dto.restaurant.UpdateRestaurantDTO;
 import com.lukaskj.irest.register.entity.Restaurant;
 import com.lukaskj.irest.register.util.ConstraintViolationRespose;
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -59,6 +63,13 @@ public class RestaurantResource {
    RestaurantMapper restaurantMapper;
 
    @Inject
+   JsonWebToken token;
+
+   @Inject
+   @Claim(standard = Claims.sub)
+   String sub;
+
+   @Inject
    @Channel("restaurants")
    Emitter<String> emitter;
 
@@ -80,12 +91,13 @@ public class RestaurantResource {
          content = @Content(schema = @Schema(allOf = ConstraintViolationRespose.class)))
    public Response add(@Valid AddRestaurantDTO dto) {
       Restaurant rest = restaurantMapper.toRestaurant(dto);
+      rest.ownerId = sub;
       rest.persist();
 
       Jsonb create = JsonbBuilder.create();
       String json = create.toJson(rest);
       emitter.send(json);
-      
+
       return Response.status(Status.CREATED).build();
    }
 
@@ -97,7 +109,13 @@ public class RestaurantResource {
       if (restOpt.isEmpty()) {
          throw new NotFoundException();
       }
+
       Restaurant rest = restOpt.get();
+
+      if (!rest.ownerId.equals(sub)) {
+         throw new ForbiddenException();
+      }
+
       // rest.name = dto.companyName;
       // rest.ownerId = dto.ownerId;
       // rest.companyId = dto.companyId;
@@ -111,6 +129,11 @@ public class RestaurantResource {
    @Transactional
    public void delete(@PathParam("id") Long id) {
       Optional<Restaurant> restOpt = Restaurant.findByIdOptional(id);
+
+      if (!restOpt.get().ownerId.equals(sub)) {
+         throw new ForbiddenException();
+      }
+      
       restOpt.ifPresentOrElse(Restaurant::delete, () -> {
          throw new NotFoundException();
       });
