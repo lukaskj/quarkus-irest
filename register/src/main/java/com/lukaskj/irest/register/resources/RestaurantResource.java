@@ -71,7 +71,7 @@ public class RestaurantResource {
 
    @Inject
    @Channel("restaurants")
-   Emitter<String> emitter;
+   Emitter<Restaurant> emitter;
 
    @GET
    @Counted(name = "Restaurant count search")
@@ -94,9 +94,7 @@ public class RestaurantResource {
       rest.ownerId = sub;
       rest.persist();
 
-      Jsonb create = JsonbBuilder.create();
-      String json = create.toJson(rest);
-      emitter.send(json);
+      emitter.send(rest);
 
       return Response.status(Status.CREATED).build();
    }
