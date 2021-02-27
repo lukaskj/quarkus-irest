@@ -1,5 +1,5 @@
 ```bash
-$ mvn io.quarkus:quarkus-maven-plugin:1.11.0.Final:create "-DprojectGroupId=com.lukaskj.irest" "-DprojectArtifactId=marketplace" "-DclassName=com.lukaskj.irest.marketplace.HelloResource" "-Dpath=/marketplace"
+$ mvn io.quarkus:quarkus-maven-plugin:1.12.0.Final:create "-DprojectGroupId=com.lukaskj.irest" "-DprojectArtifactId=marketplace" "-DclassName=com.lukaskj.irest.marketplace.HelloResource" "-Dpath=/marketplace"
 
 $ ./mvnw clean package -DskipTests
 
@@ -13,6 +13,10 @@ $ ./mvnw quarkus:add-extension -Dextensions="resteasy-mutiny,jdbc-postgres, flyw
 
 # Order
 ./mvnw quarkus:add-extension -Dextensions="smallrye-openapi,resteasy-jsonb,mongodb-panache,smallrye-reactive-messaging-kafka,quarkus-smallrye-health"
+
+# Cli
+./mvnw quarkus:dev -Dquarkus.args="a b c"
+
 
 $ docker run --ulimit memlock=-1:-1 -it --rm --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=quarkus_test -e POSTGRES_PASSWORD=quarkus_test -e POSTGRES_DB=quarkus_test -p 5432:5432 postgres:13-alpine
 
